@@ -1,0 +1,45 @@
+import { useState, useEffect } from 'react';
+
+export default function DigitalClock() {
+  const [time, setTime] = useState(new Date());
+  const [text, setText] = useState('');
+
+  const texts = [
+    "时间是最公平的资源，每个人都拥有24小时",
+    "珍惜当下，因为此刻正在成为过去",
+    "时光匆匆，莫负韶华",
+    "每一秒都是生命的馈赠",
+    "时间不会为任何人停留，但记忆会"
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date());
+      // 每5秒更换一次文本
+      if (Math.floor(Math.random() * 5) === 0) {
+        setText(texts[Math.floor(Math.random() * texts.length)]);
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (date) => {
+    return date.toLocaleTimeString('zh-CN', {
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 text-gray-800">
+      <div className="text-8xl font-mono font-bold mb-8 text-indigo-600 drop-shadow-lg">
+        {formatTime(time)}
+      </div>
+      <div className="text-xl text-gray-600 max-w-md text-center px-4">
+        {text || "时间在流逝，珍惜每一刻..."}
+      </div>
+    </div>
+  );
+}
