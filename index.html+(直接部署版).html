@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数字时钟</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #333;
+    }
+    .clock-container {
+      text-align: center;
+      background: white;
+      padding: 3rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .clock {
+      font-size: 5rem;
+      font-family: 'Courier New', monospace;
+      color: #2563eb;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .text {
+      font-size: 1.1rem;
+      color: #6b7280;
+      max-width: 400px;
+      line-height: 1.6;
+    }
+  </style>
+
+<script>!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):(e="undefined"!=typeof globalThis?globalThis:e||self).__WWBridge=t()}(this,function(){"use strict";function e(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,"default")?e.default:e}var t,n={exports:{}};var r=(t||(t=1,function(e){var t=Object.prototype.hasOwnProperty,n="~";function r(){}function o(e,t,n){this.fn=e,this.context=t,this.once=n||!1}function s(e,t,r,s,a){if("function"!=typeof r)throw new TypeError("The listener must be a function");var i=new o(r,s||e,a),c=n?n+t:t;return e._events[c]?e._events[c].fn?e._events[c]=[e._events[c],i]:e._events[c].push(i):(e._events[c]=i,e._eventsCount++),e}function a(e,t){0===--e._eventsCount?e._events=new r:delete e._events[t]}function i(){this._events=new r,this._eventsCount=0}Object.create&&(r.prototype=Object.create(null),(new r).__proto__||(n=!1)),i.prototype.eventNames=function(){var e,r,o=[];if(0===this._eventsCount)return o;for(r in e=this._events)t.call(e,r)&&o.push(n?r.slice(1):r);return Object.getOwnPropertySymbols?o.concat(Object.getOwnPropertySymbols(e)):o},i.prototype.listeners=function(e){var t=n?n+e:e,r=this._events[t];if(!r)return[];if(r.fn)return[r.fn];for(var o=0,s=r.length,a=new Array(s);o<s;o++)a[o]=r[o].fn;return a},i.prototype.listenerCount=function(e){var t=n?n+e:e,r=this._events[t];return r?r.fn?1:r.length:0},i.prototype.emit=function(e,t,r,o,s,a){var i=n?n+e:e;if(!this._events[i])return!1;var c,f,p=this._events[i],u=arguments.length;if(p.fn){switch(p.once&&this.removeListener(e,p.fn,void 0,!0),u){case 1:return p.fn.call(p.context),!0;case 2:return p.fn.call(p.context,t),!0;case 3:return p.fn.call(p.context,t,r),!0;case 4:return p.fn.call(p.context,t,r,o),!0;case 5:return p.fn.call(p.context,t,r,o,s),!0;case 6:return p.fn.call(p.context,t,r,o,s,a),!0}for(f=1,c=new Array(u-1);f<u;f++)c[f-1]=arguments[f];p.fn.apply(p.context,c)}else{var l,d=p.length;for(f=0;f<d;f++)switch(p[f].once&&this.removeListener(e,p[f].fn,void 0,!0),u){case 1:p[f].fn.call(p[f].context);break;case 2:p[f].fn.call(p[f].context,t);break;case 3:p[f].fn.call(p[f].context,t,r);break;case 4:p[f].fn.call(p[f].context,t,r,o);break;default:if(!c)for(l=1,c=new Array(u-1);l<u;l++)c[l-1]=arguments[l];p[f].fn.apply(p[f].context,c)}}return!0},i.prototype.on=function(e,t,n){return s(this,e,t,n,!1)},i.prototype.once=function(e,t,n){return s(this,e,t,n,!0)},i.prototype.removeListener=function(e,t,r,o){var s=n?n+e:e;if(!this._events[s])return this;if(!t)return a(this,s),this;var i=this._events[s];if(i.fn)i.fn!==t||o&&!i.once||r&&i.context!==r||a(this,s);else{for(var c=0,f=[],p=i.length;c<p;c++)(i[c].fn!==t||o&&!i[c].once||r&&i[c].context!==r)&&f.push(i[c]);f.length?this._events[s]=1===f.length?f[0]:f:a(this,s)}return this},i.prototype.removeAllListeners=function(e){var t;return e?(t=n?n+e:e,this._events[t]&&a(this,t)):(this._events=new r,this._eventsCount=0),this},i.prototype.off=i.prototype.removeListener,i.prototype.addListener=i.prototype.on,i.prefixed=n,i.EventEmitter=i,e.exports=i}(n)),n.exports),o=e(r);return class extends o{constructor(){super(),this.onMessageFn=this.onMessage.bind(this),this.bind()}onMessage(e){if(e.data&&e.data.wwMsgType)switch(e.data.wwMsgType){case"reloadImage":this.emit("reloadImage",e.data.payload);break;case"setSandbox":this.emit("setSandbox",e.data.payload);break;case"runtimeError":this.emit("runtimeError",e.data.payload);break;case"reloadPage":this.emit("reloadPage",e.data.payload)}}bind(){window.addEventListener("message",this.onMessageFn)}dispose(){window.removeEventListener("message",this.onMessageFn)}reloadImage(e){const t={wwMsgType:"reloadImage",payload:void 0};e.postMessage(t,"*")}reloadPage(e){const t={wwMsgType:"reloadPage",payload:void 0};e.postMessage(t,"*")}setSandbox(e){const t={wwMsgType:"setSandbox",payload:void 0};e.postMessage(t,"*")}runtimeError(e,t){const n={wwMsgType:"runtimeError",payload:{error:t}};e.postMessage(n,"*")}on(e,t){return super.on(e,t)}once(e,t){return super.once(e,t)}off(e,t){return super.off(e,t)}}});
+//# sourceMappingURL=index.js.map
+</script>
+<script>
+const bridge = new window.__WWBridge();
+bridge.on('reloadImage', () => {
+    document.querySelectorAll('img').forEach((img) => {
+        const url = new URL(img.src);
+        url.searchParams.set('t', Date.now().toString());
+        img.src = url.toString();
+    });
+});
+bridge.on('reloadPage', () => {
+    window.location.reload();
+});
+</script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- 使用CDN直接加载React并渲染组件 -->
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <script>
+    // 直接定义组件（无需导出）
+    function DigitalClock() {
+      const [time, setTime] = React.useState(new Date());
+      const [text, setText] = React.useState('');
+      
+      const texts = [
+        "时间是最公平的资源，每个人都拥有24小时",
+        "珍惜当下，因为此刻正在成为过去",
+        "时光匆匆，莫负韶华",
+        "每一秒都是生命的馈赠",
+        "时间不会为任何人停留，但记忆会"
+      ];
+
+      React.useEffect(() => {
+        const timer = setInterval(() => {
+          setTime(new Date());
+          // 每5秒随机更换一次文字
+          if (Math.floor(Math.random() * 5) === 0) {
+            setText(texts[Math.floor(Math.random() * texts.length)]);
+          }
+        }, 1000);
+        return () => clearInterval(timer);
+      }, []);
+
+      const formatTime = (date) => {
+        return date.toLocaleTimeString('zh-CN', {
+          hour12: false,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+      };
+
+      return (
+        <div className="clock-container">
+          <div className="clock">{formatTime(time)}</div>
+          <div className="text">{text || "时间在流逝，珍惜每一刻..."}</div>
+        </div>
+      );
+    }
+
+    // 直接渲染组件（无需导入）
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <DigitalClock />
+      </React.StrictMode>
+    );
+  </script>
+</body>
+</html>
